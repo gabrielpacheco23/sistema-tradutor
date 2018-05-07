@@ -1,9 +1,6 @@
-import os.path
-basedir = os.path.abspath(os.path.dirname(__file__))
-
 DEBUG = True
 
-SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'storage.db')
+SQLALCHEMY_DATABASE_URI = 'mysql://root:1234@localhost:3306/trad_sys'
 SQLALCHEMY_TRACK_MODIFICATIONS = True
 
-SECRET_KEY = "10111027cd"  #23bin, 02, 1997hexa
+SECRET_KEY = "10111027cd"
