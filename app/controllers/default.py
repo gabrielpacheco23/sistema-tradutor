@@ -21,13 +21,14 @@ def login():
 	return render_template('login.html', form=form)
 
 
-@app.route("/teste/<info>")
-@app.route("/teste", defaults={"info": None})
 
-def teste(info):
+#@app.route("/teste/<info>")
+#@app.route("/teste", defaults={"info": None})
+
+#def teste(info):
 #	i = User("teste2", "teste", "Teste Teste", "teste2@teste.com")
 #	db.session.add(i)
 #	db.session.commit()
-	r = User.query.filter_by(username="teste").all()
-	print(r)
-	return "Ok"
+#	r = User.query.filter_by(username="teste").all()
+#	print(r)
+#	return "Ok"
