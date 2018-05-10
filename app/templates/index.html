@@ -4,12 +4,65 @@
 
 {% block content %}
 
+<!--<link rel="stylesheet" type="text/css" href="chat.css"> -->
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<!------ Include the above in your HEAD tag ---------->
+<script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
 
-<div class="chat_window"><div class="top_menu"><div class="buttons"><div class="button close"></div><div class="button minimize"></div><div class="button maximize"></div></div><div class="title">Chat</div></div><ul class="messages"></ul><div class="bottom_wrapper clearfix"><div class="message_input_wrapper"><input class="message_input" placeholder="Type your message here..." /></div><div class="send_message"><div class="icon"></div><div class="text">Send</div></div></div></div><div class="message_template"><li class="message"><div class="avatar"></div><div class="text_wrapper"><div class="text"></div></div></li></div>
+<script type="text/javascript" charset="utf-8">
+    var socket = io.connect('http://' + document.domain + ':' + location.port);
+    socket.on('connect', function() {
+        socket.emit('my event', {data: 'I\'m connected!'});
+    });
+
+    socket.on('message', function(msg) {
+        $("#messages").append('<li>' + msg + '</li>');
+        console.log('Received message');
+    });
+</script>     <!--  SOCKET IO -->
+<!-- Include the above in your HEAD tag ---------->
+
+<div class="chat_window">
+  <div class="top_menu">
+    <div class="buttons">
+      <div class="button close">
+      </div>
+      <div class="button minimize">
+      </div>
+      <div class="button maximize">
+      </div>
+    </div>
+    <div class="title">Chat
+    </div>
+  </div>
+  <ul class="messages">
+  </ul>
+  <div class="bottom_wrapper clearfix">
+    <div class="message_input_wrapper">
+      <input class="message_input" placeholder="Digite sua mensagem aqui..." />
+    </div>
+    <div class="send_message">
+      <div class="icon">
+      </div>
+      <div class="text">Enviar
+      </div>
+    </div>
+  </div>
+</div>
+<div class="message_template">
+  <li class="message">
+    <div class="avatar">
+    </div>
+    <div class="username">Username
+    </div>
+    <div class="text_wrapper">
+      <div class="text">
+      </div>
+    </div>
+  </li>
+</div>
+
 
 <style>
 * {
@@ -124,6 +177,14 @@ body {
   border-radius: 50%;
   display: inline-block;
 }
+.messages .message.right .username {
+  color: #45829b;
+  float: right;
+}
+.messages .message.left .username {
+  color: #f5886e;
+  float: left;
+}
 .messages .message .text_wrapper {
   display: inline-block;
   padding: 20px;
@@ -208,7 +269,7 @@ body {
   display: none;
 }
 </style>
-<script>
+ <script>
 (function () {
     var Message;
     Message = function (arg) {
