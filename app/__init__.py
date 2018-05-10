@@ -9,6 +9,7 @@ app = Flask(__name__)
 app.config.from_object('config')
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+
 socketio = SocketIO(app)
 
 manager = Manager(app)

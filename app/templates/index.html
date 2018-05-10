@@ -10,19 +10,7 @@
 <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
 
-<script type="text/javascript" charset="utf-8">
-    var socket = io.connect('http://' + document.domain + ':' + location.port);
-    socket.on('connect', function() {
-        socket.emit('my event', {data: 'I\'m connected!'});
-    });
-
-    socket.on('message', function(msg) {
-        $("#messages").append('<li>' + msg + '</li>');
-        console.log('Received message');
-    });
-</script>     <!--  SOCKET IO -->
-<!-- Include the above in your HEAD tag ---------->
-
+<!-- chat box and messages layout ---------->
 <div class="chat_window">
   <div class="top_menu">
     <div class="buttons">
@@ -63,7 +51,19 @@
   </li>
 </div>
 
+<!--  form para username     -->
+<div class="row">
+  <div class="col-md-3 col-md-offset-3"></div>
+    <form class="form-inline">
+      <div class="form-group">
+        <label for="exampleInputName2">Nome</label>
+        <input type="text" class="username form-control" id="exampleInputName2" placeholder="Digite seu nome">
+      </div>
+      <!--<p><button type="submit" class="btn btn-default">Submit</button></p> -->
+    </form>
+</div>
 
+<!-- CSS  (styles)    -->
 <style>
 * {
   box-sizing: border-box;
@@ -72,6 +72,15 @@
 body {
   background-color: #edeff2;
   font-family: "Calibri", "Roboto", sans-serif;
+}
+
+.row {
+  position: absolute;
+  left: 83%;
+}
+
+p {
+  margin: 10px 75px;
 }
 
 .chat_window {
@@ -269,7 +278,7 @@ body {
   display: none;
 }
 </style>
- <script>
+<!-- <script>
 (function () {
     var Message;
     Message = function (arg) {
@@ -290,6 +299,7 @@ body {
     $(function () {
         var getMessageText, message_side, sendMessage;
         message_side = 'right';
+        //message_side = 'left';
         getMessageText = function () {
             var $message_input;
             $message_input = $('.message_input');
@@ -327,6 +337,53 @@ body {
         //}, 2000);
     });
 }.call(this));
+</script> -->
+<!--   JS (scripts)       $('form').on('submit', function (e) {      -->
+ <script>
+    var socket = io.connect('http://localhost:5000/')
+    //brodcast a message
+    socket.on('connect', function() {
+      socket.emit('message', {
+        data : 'User connected!'
+      })
+    })
+
+    var form = $('.send_message').click(function (e) {
+      e.preventDefault()
+      var username = $('input.username').val()
+      var message = $('input.message_input').val()
+      socket.emit('message', {
+        user : username,
+        msg : message
+      })
+      //empty message field
+      $('input.message_input').val('').focus()
+    })
+
+    var pressEnter = $('.message_input').keyup(function (e) {
+      e.preventDefault()
+      if(e.which == 13) {
+        var username = $('input.username').val()
+        var message = $('input.message_input').val()
+        socket.emit('message', {
+          user : username,
+          msg : message
+        })
+      //empty message field
+        $('input.message_input').val('').focus()
+      }
+    })
+//   capture message -> show text
+    socket.on('response', function(msg){
+      if(typeof msg.user !== 'undefined') {
+        $('ul.messages').append('<li class="message left appeared">\
+        <div class="avatar"></div>\
+        <div class="username">'+msg.user+'</div>\
+        <div class="text_wrapper"><div class="text">' + msg.msg + '</div></div></li>')
+      }
+      console.log(msg)
+    })
+
 </script>
 
 {% endblock %}
