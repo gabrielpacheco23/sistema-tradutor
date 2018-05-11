@@ -358,6 +358,7 @@ p {
       })
       //empty message field
       $('input.message_input').val('').focus()
+      return $('ul.messages').animate({ scrollTop: $('ul.messages').prop('scrollHeight') }, 300)
     })
 
     var pressEnter = $('.message_input').keyup(function (e) {
@@ -371,6 +372,7 @@ p {
         })
       //empty message field
         $('input.message_input').val('').focus()
+        return $('ul.messages').animate({ scrollTop: $('ul.messages').prop('scrollHeight') }, 300)
       }
     })
 //   capture message -> show text
@@ -382,6 +384,7 @@ p {
         <div class="text_wrapper"><div class="text">' + msg.msg + '</div></div></li>')
       }
       console.log(msg)
+      return $('ul.messages').animate({ scrollTop: $('ul.messages').prop('scrollHeight') }, 300)
     })
 
 </script>
