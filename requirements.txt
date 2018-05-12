@@ -7,4 +7,9 @@ WTForms==2.1
 Flask_SQLAlchemy==2.3.2
 flask_migrate==2.1.1
 flask_script==2.0.6
+flask_socketio
+SpeechRecognition
+py-googletrans
+requests --upgrade
 mysqlclient
+
