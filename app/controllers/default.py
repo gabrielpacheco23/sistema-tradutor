@@ -15,8 +15,6 @@ def index():
 
 translator = Translator()
 
-lan = translator.detect('How are you my friend?')
-
 @socketio.on('message')
 def handle_messages(json):
     print('Receveid something' + str(json))
