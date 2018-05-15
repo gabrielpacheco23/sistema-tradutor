@@ -13,11 +13,14 @@ from googletrans import Translator
 def index():
     return render_template('index.html')
 
+
 translator = Translator()
+
 
 @socketio.on('message')
 def handle_messages(json):
     print('Receveid something' + str(json))
-    translation = translator.translate(str(json['msg']), src='pt')
-    print("Tradução:" + translation.text)
+    if "data" not in json:
+        translation = translator.translate(str(json['msg']), src='pt')
+        print("Tradução:" + translation.text)
     socketio.emit('response', json)
