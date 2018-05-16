@@ -1,0 +1,7 @@
+erro de conexão: py-googletrans precisa de conexão HTTPS (internet)
+erro de datatypes: ao conectar, emite data sem campo JSON "['msg']"; precisa\
+de if para tratamento do erro (if not data) { ... } 
+
+feito: reformular formato 'JSON data' de emissão ('socketio.emit()')
+	
+--next:  ajustar "troca de lados" das mensagens por usuario

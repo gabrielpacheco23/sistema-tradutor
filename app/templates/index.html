@@ -439,7 +439,7 @@ p {
       }
     })
 //   capture message -> show text
-    socket.on('response', function(msg){                            //ARRUMAR ISTO ABAIXO
+    socket.on('response', function(msg){
       if(typeof msg.user != 'undefined') {
         $('ul.messages').append('<li class="message left appeared">\
         <div class="avatar"></div>\

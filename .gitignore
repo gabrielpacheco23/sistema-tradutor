@@ -102,4 +102,4 @@ ENV/
 .mypy_cache/
 
 #error log
-error_log.txt
+#error_log.txt
