@@ -23,4 +23,5 @@ def handle_messages(json):
     if "data" not in json:
         translation = translator.translate(str(json['msg']), src='pt')
         print("Tradução:" + translation.text)
+        json['transl'] = translation.text
     socketio.emit('response', json)

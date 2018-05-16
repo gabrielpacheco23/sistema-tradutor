@@ -48,6 +48,10 @@
       <div class="text">
       </div>
     </div>
+    <div class="translation">
+      <div class="text">
+      </div>
+    </div>
   </li>
 </div>
 
@@ -204,6 +208,59 @@ p {
   min-width: 100px;
   position: relative;
 }
+.messages .message .translation {
+  display: inline-block;
+  padding: 17px;
+  border-radius: 6px;
+  width: calc(100% - 85px);
+  min-width: 100px;
+  position: relative;
+  top: 5px;
+}
+.messages .message.left .translation::after, .messages .message.left .translation::before {
+  right: 100%;
+  border-right-color: #ffe6cb;
+}
+.messages .message.right .translation::after, .messages .message.right .translation::before {
+  left: 100%;
+  border-left-color: #c7eafc;
+}
+.messages .message.left .translation {
+  background-color: #BDBDBD;
+  margin-left: 80px;
+}
+.messages .message.right .translation {
+  background-color: #BDBDBD;
+  margin-right: 80px;
+  float: right;
+}
+.messages .message.right .translation .text {
+  color: #0080FF;
+  font-size: 16px;
+  font-weight: 300;
+}
+.messages .message.left .translation .text {
+  color: #0080FF;
+  font-size: 16px;
+  font-weight: 300;
+}
+.messages .message .translation::after, .messages .message .translation:before {
+  top: 18px;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+.messages .message .translation::after {
+  border-width: 13px;
+  margin-top: 0px;
+}
+.messages .message .translation::before {
+  border-width: 15px;
+  margin-top: -2px;
+}
 .messages .message .text_wrapper::after, .messages .message .text_wrapper:before {
   top: 18px;
   border: solid transparent;
@@ -354,9 +411,11 @@ p {
       e.preventDefault()
       var username = $('input.username').val()
       var message = $('input.message_input').val()
+      var translation = $('translation.text').val()
       socket.emit('message', {
         user : username,
-        msg : message
+        msg : message,
+        transl : translation
       })
       //empty message field
       $('input.message_input').val('').focus()
@@ -368,9 +427,11 @@ p {
       if(e.which == 13) {
         var username = $('input.username').val()
         var message = $('input.message_input').val()
+        var translation = $('translation.text').val()
         socket.emit('message', {
           user : username,
-          msg : message
+          msg : message,
+          transl : translation
         })
       //empty message field
         $('input.message_input').val('').focus()
@@ -378,12 +439,15 @@ p {
       }
     })
 //   capture message -> show text
-    socket.on('response', function(msg){
-      if(typeof msg.user !== 'undefined') {
+    socket.on('response', function(msg){                            //ARRUMAR ISTO ABAIXO
+      if(typeof msg.user != 'undefined') {
         $('ul.messages').append('<li class="message left appeared">\
         <div class="avatar"></div>\
         <div class="username">'+msg.user+'</div>\
-        <div class="text_wrapper"><div class="text">' + msg.msg + '</div></div></li>')
+        <div class="text_wrapper">\
+            <div class="text">' + msg.msg + '</div>\
+        </div><div class="translation">\
+            <div class="text">'+ msg.transl +'</div>\</li>')
       }
       console.log(msg)
       return $('ul.messages').animate({ scrollTop: $('ul.messages').prop('scrollHeight') }, 300)
