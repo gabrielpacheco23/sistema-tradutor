@@ -48,6 +48,10 @@
       <div class="text">
       </div>
     </div>
+    <div class="translation">
+      <div class="text">
+      </div>
+    </div>
   </li>
 </div>
 
@@ -166,7 +170,7 @@ p {
   float: right;
 }
 .messages .message.right .text_wrapper {
-  background-color: #c7eafc;
+  background-color: #f5cc92;
   margin-right: 20px;
   float: right;
 }
@@ -189,10 +193,12 @@ p {
 .messages .message.right .username {
   color: #45829b;
   float: right;
+  font-weight: bold;
 }
 .messages .message.left .username {
   color: #f5886e;
   float: left;
+  font-weight: bold;
 }
 .messages .message .text_wrapper {
   display: inline-block;
@@ -201,6 +207,59 @@ p {
   width: calc(100% - 85px);
   min-width: 100px;
   position: relative;
+}
+.messages .message .translation {
+  display: inline-block;
+  padding: 17px;
+  border-radius: 6px;
+  width: calc(100% - 85px);
+  min-width: 100px;
+  position: relative;
+  top: 5px;
+}
+.messages .message.left .translation::after, .messages .message.left .translation::before {
+  right: 100%;
+  border-right-color: #cdf7d7;
+}
+.messages .message.right .translation::after, .messages .message.right .translation::before {
+  left: 100%;
+  border-left-color: #cdf7d7;
+}
+.messages .message.left .translation {
+  background-color: #cdf7d7;
+  margin-left: 80px;
+}
+.messages .message.right .translation {
+  background-color: #cdf7d7;
+  margin-right: 80px;
+  float: right;
+}
+.messages .message.right .translation .text {
+  color: #0a889c;
+  font-size: 16px;
+  font-weight: 300;
+}
+.messages .message.left .translation .text {
+  color: #0a889c;
+  font-size: 16px;
+  font-weight: 300;
+}
+.messages .message .translation::after, .messages .message .translation:before {
+  top: 18px;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+}
+.messages .message .translation::after {
+  border-width: 13px;
+  margin-top: 0px;
+}
+.messages .message .translation::before {
+  border-width: 15px;
+  margin-top: -2px;
 }
 .messages .message .text_wrapper::after, .messages .message .text_wrapper:before {
   top: 18px;
@@ -346,16 +405,21 @@ p {
       socket.emit('message', {
         data : 'User connected!'
       })
+      message_side = 'left'
     })
 
     var form = $('.send_message').click(function (e) {
       e.preventDefault()
       var username = $('input.username').val()
       var message = $('input.message_input').val()
+      var translation = $('translation.text').val()
       socket.emit('message', {
         user : username,
-        msg : message
+        msg : message,
+        transl : translation
       })
+      //set message side
+      message_side = 'right'
       //empty message field
       $('input.message_input').val('').focus()
       return $('ul.messages').animate({ scrollTop: $('ul.messages').prop('scrollHeight') }, 300)
@@ -366,10 +430,14 @@ p {
       if(e.which == 13) {
         var username = $('input.username').val()
         var message = $('input.message_input').val()
+        var translation = $('translation.text').val()
         socket.emit('message', {
           user : username,
-          msg : message
+          msg : message,
+          transl : translation
         })
+        //set message side
+        message_side = 'right'
       //empty message field
         $('input.message_input').val('').focus()
         return $('ul.messages').animate({ scrollTop: $('ul.messages').prop('scrollHeight') }, 300)
@@ -377,11 +445,18 @@ p {
     })
 //   capture message -> show text
     socket.on('response', function(msg){
-      if(typeof msg.user !== 'undefined') {
-        $('ul.messages').append('<li class="message left appeared">\
+      //message_side = 'left'
+      if(msg.user != $('input.username').val()) {
+        message_side = 'left'
+      }
+      if(typeof msg.user != 'undefined') {
+        $('ul.messages').append('<li class="message ' + message_side + ' appeared">\
         <div class="avatar"></div>\
         <div class="username">'+msg.user+'</div>\
-        <div class="text_wrapper"><div class="text">' + msg.msg + '</div></div></li>')
+        <div class="text_wrapper">\
+            <div class="text">' + msg.msg + '</div>\
+        </div><div class="translation">\
+            <div class="text">'+ msg.transl +'</div>\</li>')
       }
       console.log(msg)
       return $('ul.messages').animate({ scrollTop: $('ul.messages').prop('scrollHeight') }, 300)

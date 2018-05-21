@@ -11,5 +11,6 @@ flask_socketio
 SpeechRecognition
 py-googletrans
 requests --upgrade
+pyaudio
 mysqlclient
 
