@@ -8,10 +8,12 @@ Flask_SQLAlchemy==2.3.2
 flask_migrate==2.1.1
 flask_script==2.0.6
 flask_socketio
+gevent
+eventlet
 SpeechRecognition
 py-googletrans
 mysqlclient
 googletrans==2.2.0
 gTTS==1.2.2
 gTTS-token==1.1.1
-gunicorn
+gunicorn==17.5
