@@ -10,7 +10,6 @@ flask_script==2.0.6
 flask_socketio
 SpeechRecognition
 py-googletrans
-pyaudio
 mysqlclient
 googletrans==2.2.0
 gTTS==1.2.2
