@@ -176,7 +176,7 @@ p {
 }
 .messages .message.right .text_wrapper::after, .messages .message.right .text_wrapper::before {
   left: 100%;
-  border-left-color: #c7eafc;
+  border-left-color: #f5cc92;
 }
 .messages .message.right .text {
   color: #45829b;
@@ -204,7 +204,7 @@ p {
   display: inline-block;
   padding: 20px;
   border-radius: 6px;
-  width: calc(100% - 85px);
+  width: calc(100% - px);/* tam da text_wrapper ajusta ao tam do .text */
   min-width: 100px;
   position: relative;
 }
@@ -212,7 +212,7 @@ p {
   display: inline-block;
   padding: 17px;
   border-radius: 6px;
-  width: calc(100% - 85px);
+  width: calc(100% - 85px);    /* mudar aqui também para ajuste autom.*/
   min-width: 100px;
   position: relative;
   top: 5px;
@@ -397,7 +397,7 @@ p {
     });
 }.call(this));
 </script> -->
-<!--   JS (scripts)       $('form').on('submit', function (e) {      -->
+<!--   JS (scripts)       $('form').on('submit', function (e) {   //   -->
  <script>
     var socket = io.connect('http://localhost:5000/')
     //brodcast a message

@@ -4,7 +4,10 @@ from flask import Flask, request, redirect, url_for, session, render_template, s
 from app import app, db, socketio
 from flask_socketio import SocketIO, send
 from googletrans import Translator
-# import pydeepl
+#import pydeepl
+#import pyaudio
+#import speech_recognition as sr
+#import unicodedata
 
 from app.models.tables import User
 from app.models import forms
@@ -70,7 +73,10 @@ translator = Translator()
 def handle_messages(json):
     print('Receveid something' + str(json))
     if "data" not in json:
-        translation = translator.translate(str(json['msg']), src='pt')
+        translation = translator.translate(str(json['msg']), src='en', dest='pt')
+        #translation = pydeepl.translate(str(json['msg']), 'ES')
         print("Tradução:" + translation.text)
+        #print("Tradução: "+ translation)
         json['transl'] = translation.text
+        #json['transl'] = translation
     socketio.emit('response', json)
