@@ -14,3 +14,4 @@ mysqlclient
 googletrans==2.2.0
 gTTS==1.2.2
 gTTS-token==1.1.1
+gunicorn
